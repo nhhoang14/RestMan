@@ -1,1 +1,123 @@
-/* customer */
+.customer-actions {
+    display: grid;
+    gap: 12px;
+}
+
+.customer-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.customer-table th,
+.customer-table td {
+    vertical-align: middle;
+}
+
+/* Tỉ lệ các cột: 1 : 4 : 3 : 2 (tổng 10 phần -> 10% : 40% : 30% : 20%) */
+
+.customer-table th:first-child,
+.customer-table td:first-child {
+    width: 10%;
+    padding-left: 4px;
+    padding-right: 4px;
+    text-align: center;
+}
+
+.customer-table th:nth-child(2),
+.customer-table td:nth-child(2) {
+    width: 50%;
+    text-align: left;
+    padding-left: 14px;
+    padding-right: 14px;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.customer-table th:nth-child(3),
+.customer-table td:nth-child(3) {
+    width: 20%;
+    padding-left: 6px;
+    padding-right: 14px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.customer-table th:nth-child(4),
+.customer-table td:nth-child(4) {
+    width: 20%;
+    padding-left: 6px;
+    padding-right: 6px;
+    text-align: center;
+}
+
+.customer-table th:last-child,
+.customer-table td:last-child {
+    text-align: center;
+}
+
+/* Button Xem chi tiết: giao diện nút bấm nổi bật, dễ nhận diện */
+.detail-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    min-height: 32px;
+    background: var(--primary);
+    color: var(--bg);
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    transition: filter 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+    cursor: pointer;
+}
+
+.detail-button:hover {
+    filter: brightness(1.12);
+    box-shadow: 0 2px 8px rgba(111, 144, 224, 0.4);
+    color: var(--bg);
+}
+
+.detail-button:active {
+    transform: scale(0.97);
+}
+
+.menu-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    max-height: 150px;
+    margin: 20px auto;
+    border-radius: 7px;
+}
+
+.detail-table th {
+    width: 38%;
+    background: var(--surface);
+    text-align: left;
+}
+
+.detail-table td {
+    text-align: left;
+}
+
+.combo-title {
+    margin-top: 24px;
+}
+
+.combo-table th:first-child,
+.combo-table td:first-child,
+.combo-table th:nth-child(3),
+.combo-table td:nth-child(3) {
+    text-align: center;
+}
+
+.combo-table th:last-child,
+.combo-table td:last-child {
+    text-align: right;
+    white-space: nowrap;
+}

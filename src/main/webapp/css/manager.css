@@ -1,1 +1,112 @@
-/* manager */
+.manager-actions {
+    display: grid;
+    gap: 12px;
+}
+
+.login-page {
+    max-width: 440px;
+}
+
+.login-card {
+    margin-top: 48px;
+    padding: 28px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.login-card .page-title {
+    margin-bottom: 8px;
+}
+
+.login-form {
+    display: grid;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.login-form label {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.login-form input {
+    margin-bottom: 10px;
+    background: var(--bg);
+}
+
+.form-error {
+    margin: 18px 0 0;
+    color: #F2A5A5;
+}
+
+.login-back {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0 0;
+}
+
+.filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+    margin-bottom: 24px;
+}
+
+.filter-field {
+    display: grid;
+    gap: 6px;
+}
+
+.filter-field label {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.filter-row .btn-primary {
+    width: auto;
+    min-width: 100px;
+}
+
+.manager-table th:first-child,
+.manager-table td:first-child {
+    width: 52px;
+    text-align: center;
+}
+
+.manager-table .total-row td {
+    font-weight: 800;
+}
+
+.status-success {
+    color: var(--success);
+}
+
+.detail-table th {
+    width: 38%;
+    background: var(--surface);
+    text-align: left;
+}
+
+.detail-table td {
+    text-align: left;
+}
+
+.detail-table .total-row th,
+.detail-table .total-row td {
+    font-weight: 800;
+}
+
+.action-bottom {
+    margin-top: 24px;
+}
+
+@media (max-width: 560px) {
+    .filter-row {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-row .btn-primary {
+        width: 100%;
+    }
+}

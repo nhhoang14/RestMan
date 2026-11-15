@@ -1,10 +1,12 @@
 package com.RestMan.model;
 
-import java.util.*;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Dish6 extends MenuItem6 {
-    // TODO: bổ sung thuộc tính theo thiết kế CSDL
-
-    public Dish6() {
-    }
+    private String size;
+    private String unit;
 }
