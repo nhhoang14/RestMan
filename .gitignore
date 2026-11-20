@@ -26,3 +26,6 @@ out/
 
 # Database
 *.sql
+
+# Images
+images/
