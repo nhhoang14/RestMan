@@ -28,4 +28,5 @@ out/
 *.sql
 
 # Images
-images/
+/images/
+/src/main/webapp/images/
