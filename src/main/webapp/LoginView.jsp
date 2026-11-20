@@ -4,19 +4,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Đăng nhập quản lý - RestMan</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/manager.css">
+    <title>Đăng nhập - RestMan</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css?v=20261120">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/manager.css?v=20261120">
 </head>
 <body>
     <main class="page login-page">
         <header class="topbar">
             <a class="brand" href="${pageContext.request.contextPath}/">RestMan</a>
-            <span class="greeting">Khu vực quản lý</span>
+            <span class="greeting">Đăng nhập tài khoản</span>
         </header>
         <section class="login-card">
-            <h1 class="page-title">Đăng nhập quản lý</h1>
-            <p class="hint">Vui lòng đăng nhập để xem báo cáo nhà hàng.</p>
+            <h1 class="page-title">Đăng nhập</h1>
+            <p class="hint">Đăng nhập bằng tài khoản quản lý hoặc khách hàng.</p>
             <c:if test="${not empty error}">
                 <p class="form-error" role="alert">${error}</p>
             </c:if>

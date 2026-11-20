@@ -6,14 +6,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Tìm kiếm món ăn</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css?v=20261120">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer.css?v=20261120">
 </head>
 <body>
     <main class="page">
         <header class="topbar">
             <a class="brand" href="${pageContext.request.contextPath}/customer/CustomerMainView.jsp">RestMan</a>
-            <span class="greeting">Xin chào, khách hàng</span>
+            <div class="topbar-actions">
+                <span class="greeting">
+                    Xin chào, ${empty sessionScope.customer.fullName ? 'khách hàng' : sessionScope.customer.fullName}
+                </span>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.customer}">
+                        <a class="secondary-link"
+                           href="${pageContext.request.contextPath}/login?action=logout">
+                            Đăng xuất
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="secondary-link"
+                           href="${pageContext.request.contextPath}/login">
+                            Đăng nhập
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </header>
 
         <section class="content">

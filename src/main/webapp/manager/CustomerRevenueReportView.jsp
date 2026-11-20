@@ -7,14 +7,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Thống kê khách hàng theo doanh thu</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/manager.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css?v=20261120">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/manager.css?v=20261120">
 </head>
 <body>
     <main class="page">
         <header class="topbar">
             <a class="brand" href="${pageContext.request.contextPath}/manager/ManagerMainView.jsp">RestMan</a>
-            <span class="greeting">Xin chào, quản lý</span>
+            <div class="topbar-actions">
+                <span class="greeting">
+                    Xin chào, ${empty sessionScope.manager.fullName ? 'quản lý' : sessionScope.manager.fullName}
+                </span>
+                <a class="secondary-link"
+                   href="${pageContext.request.contextPath}/login?action=logout">
+                    Đăng xuất
+                </a>
+            </div>
         </header>
         <section class="content">
             <a class="back-link" href="${pageContext.request.contextPath}/manager/SelectReportView.jsp">Quay lại</a>
@@ -42,9 +50,9 @@
                                 <td>${status.count}</td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${customer.id > 0}">
+                                        <c:when test="${customer.id > 0 or customer.fullName == 'Khách vãng lai'}">
                                             <a class="table-link"
-                                               href="${pageContext.request.contextPath}/customer-revenue?action=history&amp;customerId=${customer.id}">
+                                               href="${pageContext.request.contextPath}/customer-revenue?action=history&amp;customerId=${customer.id}&amp;customerName=${customer.fullName}&amp;startDate=${startDate}&amp;endDate=${endDate}">
                                                 ${empty customer.fullName ? '-' : customer.fullName}
                                             </a>
                                         </c:when>
@@ -64,7 +72,6 @@
                     </tbody>
                 </table>
             </div>
-            <p class="hint">Nhấn vào một khách hàng để xem lịch sử gọi món.</p>
         </section>
     </main>
 </body>

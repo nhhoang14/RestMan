@@ -1,6 +1,8 @@
 package com.RestMan.dao;
 
+import com.RestMan.model.Customer6;
 import com.RestMan.model.Manager6;
+import com.RestMan.model.Member6;
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.sql.PreparedStatement;
@@ -10,39 +12,53 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-public class ManagerLoginDAO extends DAO {
-    public Manager6 authenticate(String username, String password) {
+public class AuthenticationDAO extends DAO {
+    public record AuthenticationResult(String role, Member6 account) {}
+
+    public AuthenticationResult authenticate(String username, String password) {
         String sql = """
             SELECT m.id, m.username, m.password, m.name, m.dob, m.address, m.phone, m.email,
-                s.position
+                s.position, mg.tblStaffid AS manager_id, c.tblMemberid AS customer_id
             FROM tblMember6 m
-            JOIN tblStaff6 s ON s.tblMemberid = m.id
-            JOIN tblManager6 mg ON mg.tblStaffid = s.tblMemberid
+            LEFT JOIN tblStaff6 s ON s.tblMemberid = m.id
+            LEFT JOIN tblManager6 mg ON mg.tblStaffid = s.tblMemberid
+            LEFT JOIN tblCustomer6 c ON c.tblMemberid = m.id
             WHERE m.username = ?
             """;
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, username);
             try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) {
+                if (!rs.next() || !matchesPassword(password, rs.getString("password"))) {
                     return null;
                 }
-                if (!matchesPassword(password, rs.getString("password"))) {
-                    return null;
+
+                if (rs.getObject("manager_id") != null) {
+                    Manager6 manager = new Manager6();
+                    setMemberFields(manager, rs);
+                    manager.setPosition(rs.getString("position"));
+                    return new AuthenticationResult("manager", manager);
                 }
-                Manager6 manager = new Manager6();
-                manager.setId(rs.getInt("id"));
-                manager.setUsername(rs.getString("username"));
-                manager.setFullName(rs.getString("name"));
-                manager.setDob(rs.getDate("dob"));
-                manager.setAddress(rs.getString("address"));
-                manager.setPhone(rs.getString("phone"));
-                manager.setEmail(rs.getString("email"));
-                manager.setPosition(rs.getString("position"));
-                return manager;
+
+                if (rs.getObject("customer_id") != null) {
+                    Customer6 customer = new Customer6();
+                    setMemberFields(customer, rs);
+                    return new AuthenticationResult("customer", customer);
+                }
+                return null;
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("Không thể xác thực tài khoản quản lý", e);
+            throw new IllegalStateException("Không thể xác thực tài khoản", e);
         }
+    }
+
+    private static void setMemberFields(Member6 member, ResultSet rs) throws SQLException {
+        member.setId(rs.getInt("id"));
+        member.setUsername(rs.getString("username"));
+        member.setFullName(rs.getString("name"));
+        member.setDob(rs.getDate("dob"));
+        member.setAddress(rs.getString("address"));
+        member.setPhone(rs.getString("phone"));
+        member.setEmail(rs.getString("email"));
     }
 
     private static boolean matchesPassword(String password, String storedHash) {
@@ -66,8 +82,7 @@ public class ManagerLoginDAO extends DAO {
 
     private static byte[] deriveKey(String password, byte[] salt, int iterations)
             throws GeneralSecurityException {
-        PBEKeySpec spec = new PBEKeySpec(
-                password.toCharArray(), salt, iterations, 256);
+        PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterations, 256);
         try {
             SecretKeyFactory factory =
                     SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -76,5 +91,4 @@ public class ManagerLoginDAO extends DAO {
             spec.clearPassword();
         }
     }
-
 }

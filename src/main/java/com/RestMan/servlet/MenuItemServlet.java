@@ -7,8 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import com.RestMan.dao.MenuItemDAO;
+import com.RestMan.model.Combo6;
+import com.RestMan.model.Dish6;
+import com.RestMan.model.MenuItem6;
 
-// Xử lý module tìm kiếm thông tin món ăn
 @WebServlet("/menuitem")
 public class MenuItemServlet extends HttpServlet {
     @Override
@@ -33,7 +35,17 @@ public class MenuItemServlet extends HttpServlet {
             } else if ("detail".equals(action)) {
                 int id = parsePositiveInt(request.getParameter("id"), "Mã món ăn");
                 try (MenuItemDAO dao = new MenuItemDAO()) {
-                    request.setAttribute("menuItem", dao.getMenuItemDetail(id));
+                    MenuItem6 menuItem = dao.getMenuItemDetail(id);
+                    request.setAttribute("menuItem", menuItem);
+                    if (menuItem instanceof Dish6 dish) {
+                        request.setAttribute("dishSize", dish.getSize());
+                        request.setAttribute("dishUnit", dish.getUnit());
+                    }
+                    if (menuItem instanceof Combo6 combo) {
+                        request.setAttribute("comboDetails", combo.getComboDetails());
+                        request.setAttribute("comboStartDate", combo.getStartDate());
+                        request.setAttribute("comboEndDate", combo.getEndDate());
+                    }
                 }
                 if (request.getAttribute("menuItem") == null) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Không tìm thấy món ăn");

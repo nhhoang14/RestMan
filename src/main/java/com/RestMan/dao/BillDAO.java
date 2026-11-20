@@ -8,7 +8,6 @@ public class BillDAO extends DAO {
         super();
     }
 
-    // Hóa đơn tương ứng với đơn đặt món
     public Bill6 getBillByOrder(DishOrdering6 d) {
         if (d == null) throw new IllegalArgumentException("Đơn gọi món không được null");
         String sql = """

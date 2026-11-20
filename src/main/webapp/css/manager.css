@@ -4,11 +4,12 @@
 }
 
 .login-page {
-    max-width: 440px;
+    width: 100%;
 }
 
 .login-card {
-    margin-top: 48px;
+    max-width: 440px;
+    margin: 48px auto 0;
     padding: 28px;
     border: 1px solid var(--border);
     background: var(--surface);
@@ -31,12 +32,12 @@
 
 .login-form input {
     margin-bottom: 10px;
-    background: var(--bg);
+    background: var(--surface);
 }
 
 .form-error {
     margin: 18px 0 0;
-    color: #F2A5A5;
+    color: #93321F;
 }
 
 .login-back {

@@ -63,7 +63,7 @@
     padding: 6px 12px;
     min-height: 32px;
     background: var(--primary);
-    color: var(--bg);
+    color: #F6ECD6;
     border: 1px solid var(--primary);
     border-radius: 6px;
     font-size: 13px;
@@ -71,15 +71,15 @@
     line-height: 1.2;
     text-decoration: none;
     white-space: nowrap;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(28, 27, 26, 0.25);
     transition: filter 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
     cursor: pointer;
 }
 
 .detail-button:hover {
-    filter: brightness(1.12);
-    box-shadow: 0 2px 8px rgba(111, 144, 224, 0.4);
-    color: var(--bg);
+    filter: brightness(1.08);
+    box-shadow: 0 2px 8px rgba(179, 64, 42, 0.35);
+    color: #F6ECD6;
 }
 
 .detail-button:active {
@@ -89,10 +89,22 @@
 .menu-image {
     display: block;
     max-width: 100%;
+    width: min(520px, 70%);
     height: auto;
-    max-height: 150px;
+    max-height: 360px;
+    object-fit: contain;
     margin: 20px auto;
     border-radius: 7px;
+}
+
+.menu-image-placeholder {
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 40px 20px;
+    border: 1px dashed #aaa;
+    border-radius: 7px;
+    text-align: center;
+    color: #777;
 }
 
 .detail-table th {

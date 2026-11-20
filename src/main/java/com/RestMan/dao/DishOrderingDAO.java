@@ -14,26 +14,39 @@ public class DishOrderingDAO extends DAO {
         super();
     }
 
-    // Lịch sử gọi món của khách hàng
-    public ArrayList<DishOrdering6> getDishOrderingByCustomer(Customer6 customer) {
+    public ArrayList<DishOrdering6> getDishOrderingByCustomer(
+            Customer6 customer, java.sql.Date startDate, java.sql.Date endDate) {
         String sql = """
-                SELECT o.id, o.orderDate, o.estimatedTotalAmount, o.status
+                SELECT o.id, o.orderDate, o.estimatedTotalAmount, o.status,
+                       COALESCE(b.totalAmount, o.estimatedTotalAmount) final_amount
                 FROM tblDishOrdering6 o
                 JOIN tblTableBooking6 tb ON tb.id = o.tblTableBookingid
+                LEFT JOIN tblBill6 b ON b.tblDishOrderingid = o.id
                 WHERE tb.tblCustomerid %s
+                  %s
                 ORDER BY o.orderDate DESC
-                """.formatted(customer == null ? "IS NULL" : "= ?");
+                """.formatted(
+                        customer == null ? "IS NULL" : "= ?",
+                        startDate == null || endDate == null
+                                ? "" : "AND b.paymentTime >= ? AND b.paymentTime < DATE_ADD(?, INTERVAL 1 DAY)");
 
         ArrayList<DishOrdering6> orders = new ArrayList<>();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            if (customer != null) ps.setInt(1, customer.getId());
+            int parameterIndex = 1;
+            if (customer != null) {
+                ps.setInt(parameterIndex++, customer.getId());
+            }
+            if (startDate != null && endDate != null) {
+                ps.setDate(parameterIndex++, startDate);
+                ps.setDate(parameterIndex, endDate);
+            }
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     DishOrdering6 order = new DishOrdering6();
                     order.setId(rs.getInt("id"));
                     order.setOrderDate(rs.getTimestamp("orderDate"));
-                    order.setEstimatedTotalAmount(rs.getFloat("estimatedTotalAmount"));
+                    order.setEstimatedTotalAmount(rs.getFloat("final_amount"));
                     order.setStatus(rs.getString("status"));
                     orders.add(order);
                 }

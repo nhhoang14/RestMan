@@ -11,7 +11,6 @@ public class CustomerStatsDAO extends DAO {
         super();
     }
 
-    // Thống kê khách hàng theo doanh thu trong khoảng thời gian
     public ArrayList<CustomerStats6> getCustomerRevenueReport(Date startDate, Date endDate) {
         Date today = java.sql.Date.valueOf(LocalDate.now());
         Date effectiveStartDate = startDate == null

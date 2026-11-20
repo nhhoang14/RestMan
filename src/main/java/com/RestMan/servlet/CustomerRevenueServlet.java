@@ -15,7 +15,6 @@ import com.RestMan.dao.DishOrderingDAO;
 import com.RestMan.model.Customer6;
 import com.RestMan.model.DishOrdering6;
 
-// Xử lý module thống kê khách hàng theo doanh thu
 @WebServlet("/customer-revenue")
 public class CustomerRevenueServlet extends HttpServlet {
     @Override
@@ -51,21 +50,52 @@ public class CustomerRevenueServlet extends HttpServlet {
                 request.setAttribute("endDate", end);
                 forward(request, response, "/manager/CustomerRevenueReportView.jsp");
             } else if ("history".equals(action)) {
-                int customerId = parsePositiveInt(request.getParameter("customerId"), "Mã khách hàng");
-                Customer6 customer = new Customer6();
-                customer.setId(customerId);
+                int customerId = parseNonNegativeInt(request.getParameter("customerId"), "Mã khách hàng");
+                String customerName = request.getParameter("customerName");
+                Customer6 customer = null;
+                if (customerId > 0) {
+                    customer = new Customer6();
+                    customer.setId(customerId);
+                }
+                if (customer == null) {
+                    customer = new Customer6();
+                }
+                customer.setFullName(
+                        customerName == null || customerName.isBlank()
+                                ? (customerId == 0 ? "Khách vãng lai" : "Khách hàng")
+                                : customerName);
                 request.setAttribute("customer", customer);
                 try (DishOrderingDAO dao = new DishOrderingDAO()) {
-                    request.setAttribute("orders", dao.getDishOrderingByCustomer(customer));
+                    Date start = parseDate(request.getParameter("startDate"), "Ngày bắt đầu");
+                    Date end = parseDate(request.getParameter("endDate"), "Ngày kết thúc");
+                    if (start == null || end == null) {
+                        request.setAttribute("orders",
+                                dao.getDishOrderingByCustomer(customerId == 0 ? null : customer, null, null));
+                    } else {
+                        request.setAttribute("orders",
+                                dao.getDishOrderingByCustomer(
+                                        customerId == 0 ? null : customer, start, end));
+                    }
                 }
                 request.setAttribute("customerId", customerId);
+                request.setAttribute("customerName", customer.getFullName());
+                request.setAttribute("startDate", request.getParameter("startDate"));
+                request.setAttribute("endDate", request.getParameter("endDate"));
                 forward(request, response, "/manager/CustomerOrderHistoryView.jsp");
             } else if ("order".equals(action)) {
                 int orderId = parsePositiveInt(request.getParameter("orderId"), "Mã đơn hàng");
+                request.setAttribute("customerId", request.getParameter("customerId"));
+                request.setAttribute("customerName", request.getParameter("customerName"));
+                request.setAttribute("startDate", request.getParameter("startDate"));
+                request.setAttribute("endDate", request.getParameter("endDate"));
                 DishOrdering6 order = new DishOrdering6();
                 order.setId(orderId);
-                try (DishOrderingDAO dao = new DishOrderingDAO()) {
+                try (DishOrderingDAO dao = new DishOrderingDAO();
+                        BillDAO billDao = new BillDAO()) {
                     order = dao.getOrderDetail(order);
+                    if (order != null) {
+                        request.setAttribute("bill", billDao.getBillByOrder(order));
+                    }
                 }
                 if (order == null) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Không tìm thấy đơn hàng");
@@ -75,6 +105,10 @@ public class CustomerRevenueServlet extends HttpServlet {
                 forward(request, response, "/manager/OrderDetailView.jsp");
             } else if ("bill".equals(action)) {
                 int orderId = parsePositiveInt(request.getParameter("orderId"), "Mã đơn hàng");
+                request.setAttribute("customerId", request.getParameter("customerId"));
+                request.setAttribute("customerName", request.getParameter("customerName"));
+                request.setAttribute("startDate", request.getParameter("startDate"));
+                request.setAttribute("endDate", request.getParameter("endDate"));
                 DishOrdering6 order = new DishOrdering6();
                 order.setId(orderId);
                 try (DishOrderingDAO orderDao = new DishOrderingDAO();
@@ -114,6 +148,16 @@ public class CustomerRevenueServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(value);
             if (id <= 0) throw new NumberFormatException();
+            return id;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(field + " không hợp lệ");
+        }
+    }
+
+    private static int parseNonNegativeInt(String value, String field) {
+        try {
+            int id = Integer.parseInt(value);
+            if (id < 0) throw new NumberFormatException();
             return id;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(field + " không hợp lệ");
