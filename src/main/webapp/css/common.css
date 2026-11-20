@@ -43,10 +43,12 @@ a {
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    min-height: 72px;
-    padding: 14px 32px;
-    border-bottom: 3px solid var(--primary);
-    background: var(--bg);
+    min-height: 56px;
+    padding: 10px 32px;
+}
+
+.page-heading {
+    display: none;
 }
 
 .brand {
@@ -85,16 +87,44 @@ a {
 }
 
 .content {
-    width: min(1180px, calc(100% - 64px));
+    width: calc(100% - 64px);
+    max-width: 1440px;
     margin: 0 auto;
-    padding-top: 36px;
 }
 
 .page-title {
-    margin: 0 0 24px;
+    flex: 1;
+    margin: 0;
     font-size: 24px;
     font-weight: 800;
     letter-spacing: -0.03em;
+    color: var(--primary);
+    text-align: center;
+}
+
+.page-header-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100vw;
+    margin: 0 0 24px calc((100% - 100vw) / 2);
+    padding: 10px 0 12px;
+    padding-left: max(32px, calc((100vw - 1440px) / 2));
+    padding-right: max(32px, calc((100vw - 1440px) / 2));
+    border-bottom: 3px solid var(--primary);
+}
+
+.page-header-row .back-link {
+    flex: 0 0 auto;
+}
+
+.page-header-row .back-link + .page-title,
+.page-header-row .back-link + .table-title {
+    margin-right: 118px;
+}
+
+.page-header-row .back-link {
+    margin: 0;
 }
 
 .back-link {
@@ -111,8 +141,8 @@ a {
 
 .back-link:hover,
 .secondary-link:hover {
-    background: #93321F;
-    color: #F6ECD6;
+    background: var(--bg);
+    color: var(--primary);
 }
 
 .secondary-link {
@@ -120,8 +150,8 @@ a {
     padding: 10px 14px;
     border: 1px solid var(--primary);
     border-radius: 7px;
-    background: var(--primary);
-    color: #F6ECD6;
+    background: var(--bg);
+    color: var(--primary);
     text-align: center;
 }
 
@@ -231,11 +261,15 @@ input:focus {
 }
 
 .table-title {
-    padding: 12px;
-    border: 1px solid var(--border);
-    background: var(--accent);
-    color: #F6ECD6;
+    flex: 1;
+    margin: 0;
+    padding: 10px 0 12px;
+    border: 0;
+    border-bottom: 0;
+    background: transparent;
+    color: var(--primary);
     font-weight: 800;
+    font-size: 24px;
     text-align: center;
 }
 

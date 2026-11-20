@@ -14,6 +14,7 @@ public class DishOrderingDAO extends DAO {
         super();
     }
 
+    //Lấy danh sách món ăn của khách hàng trong khoảng thời gian
     public ArrayList<DishOrdering6> getDishOrderingByCustomer(
             Customer6 customer, java.sql.Date startDate, java.sql.Date endDate) {
         String sql = """

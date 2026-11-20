@@ -13,31 +13,10 @@
 </head>
 <body>
     <main class="page">
-        <header class="topbar">
-            <a class="brand" href="${pageContext.request.contextPath}/customer/CustomerMainView.jsp">RestMan</a>
-            <div class="topbar-actions">
-                <span class="greeting">
-                    Xin chào, ${empty sessionScope.customer.fullName ? 'khách hàng' : sessionScope.customer.fullName}
-                </span>
-                <c:choose>
-                    <c:when test="${not empty sessionScope.customer}">
-                        <a class="secondary-link"
-                           href="${pageContext.request.contextPath}/login?action=logout">
-                            Đăng xuất
-                        </a>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="secondary-link"
-                           href="${pageContext.request.contextPath}/login">
-                            Đăng nhập
-                        </a>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </header>
-
         <section class="content">
-            <div class="table-title">${empty menuItem.name ? '-' : menuItem.name}</div>
+            <div class="page-header-row">
+                <div class="table-title">${empty menuItem.name ? '-' : menuItem.name}</div>
+            </div>
             <c:choose>
                 <c:when test="${not empty menuItem.image}">
                     <c:choose>

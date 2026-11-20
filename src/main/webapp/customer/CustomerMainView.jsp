@@ -11,12 +11,15 @@
 </head>
 <body>
     <main class="page">
-        <header class="topbar">
-            <a class="brand" href="${pageContext.request.contextPath}/customer/CustomerMainView.jsp">RestMan</a>
-            <div class="topbar-actions">
-                <span class="greeting">
-                    Xin chào, ${empty sessionScope.customer.fullName ? 'khách hàng' : sessionScope.customer.fullName}
-                </span>
+        <section class="content">
+            <div class="page-header-row">
+                <h1 class="page-title">RestMan</h1>
+            </div>
+            <div class="customer-actions">
+                <a class="btn-primary"
+                   href="${pageContext.request.contextPath}/menuitem?keyword=">
+                    Tìm kiếm món ăn
+                </a>
                 <c:choose>
                     <c:when test="${not empty sessionScope.customer}">
                         <a class="secondary-link"
@@ -31,16 +34,6 @@
                         </a>
                     </c:otherwise>
                 </c:choose>
-            </div>
-        </header>
-
-        <section class="content">
-            <h1 class="page-title">Trang chính khách hàng</h1>
-            <div class="customer-actions">
-                <a class="btn-primary"
-                   href="${pageContext.request.contextPath}/menuitem?keyword=">
-                    Tìm kiếm món ăn
-                </a>
             </div>
         </section>
     </main>

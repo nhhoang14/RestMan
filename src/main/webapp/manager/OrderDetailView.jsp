@@ -12,24 +12,14 @@
 </head>
 <body>
     <main class="page">
-        <header class="topbar">
-            <a class="brand" href="${pageContext.request.contextPath}/manager/ManagerMainView.jsp">RestMan</a>
-            <div class="topbar-actions">
-                <span class="greeting">
-                    Xin chào, ${empty sessionScope.manager.fullName ? 'quản lý' : sessionScope.manager.fullName}
-                </span>
-                <a class="secondary-link"
-                   href="${pageContext.request.contextPath}/login?action=logout">
-                    Đăng xuất
-                </a>
-            </div>
-        </header>
         <section class="content">
-            <a class="back-link"
-               href="${pageContext.request.contextPath}/customer-revenue?action=history&amp;customerId=${customerId}&amp;customerName=${customerName}&amp;startDate=${startDate}&amp;endDate=${endDate}">
-                Quay lại
-            </a>
-            <div class="table-title">Đơn đặt món #${order.id}</div>
+            <div class="page-header-row">
+                <a class="back-link"
+                   href="${pageContext.request.contextPath}/customer-revenue?action=history&amp;customerId=${customerId}&amp;customerName=${customerName}&amp;startDate=${startDate}&amp;endDate=${endDate}">
+                    Quay lại
+                </a>
+                <div class="table-title">Đơn đặt món #${order.id}</div>
+            </div>
             <div class="table-wrap">
                 <table class="data-table manager-table">
                     <thead>

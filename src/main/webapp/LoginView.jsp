@@ -10,10 +10,7 @@
 </head>
 <body>
     <main class="page login-page">
-        <header class="topbar">
-            <a class="brand" href="${pageContext.request.contextPath}/">RestMan</a>
-            <span class="greeting">Đăng nhập tài khoản</span>
-        </header>
+        <div class="page-heading">RestMan</div>
         <section class="login-card">
             <h1 class="page-title">Đăng nhập</h1>
             <p class="hint">Đăng nhập bằng tài khoản quản lý hoặc khách hàng.</p>

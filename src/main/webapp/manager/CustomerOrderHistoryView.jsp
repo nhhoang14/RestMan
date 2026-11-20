@@ -12,34 +12,24 @@
 </head>
 <body>
     <main class="page">
-        <header class="topbar">
-            <a class="brand" href="${pageContext.request.contextPath}/manager/ManagerMainView.jsp">RestMan</a>
-            <div class="topbar-actions">
-                <span class="greeting">
-                    Xin chào, ${empty sessionScope.manager.fullName ? 'quản lý' : sessionScope.manager.fullName}
-                </span>
-                <a class="secondary-link"
-                   href="${pageContext.request.contextPath}/login?action=logout">
-                    Đăng xuất
-                </a>
-            </div>
-        </header>
         <section class="content">
-            <c:choose>
-                <c:when test="${not empty startDate and not empty endDate}">
-                    <a class="back-link"
-                       href="${pageContext.request.contextPath}/customer-revenue?action=report&amp;startDate=${startDate}&amp;endDate=${endDate}">
-                        Quay lại
-                    </a>
-                </c:when>
-                <c:otherwise>
-                    <a class="back-link"
-                       href="${pageContext.request.contextPath}/customer-revenue?action=report">
-                        Quay lại
-                    </a>
-                </c:otherwise>
-            </c:choose>
-            <div class="table-title">${empty customer.fullName ? 'Khách hàng' : customer.fullName}</div>
+            <div class="page-header-row">
+                <c:choose>
+                    <c:when test="${not empty startDate and not empty endDate}">
+                        <a class="back-link"
+                           href="${pageContext.request.contextPath}/customer-revenue?action=report&amp;startDate=${startDate}&amp;endDate=${endDate}">
+                            Quay lại
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="back-link"
+                           href="${pageContext.request.contextPath}/customer-revenue?action=report">
+                            Quay lại
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+                <div class="table-title">${empty customer.fullName ? 'Khách hàng' : customer.fullName}</div>
+            </div>
             <div class="table-wrap">
                 <table class="data-table manager-table">
                     <thead>

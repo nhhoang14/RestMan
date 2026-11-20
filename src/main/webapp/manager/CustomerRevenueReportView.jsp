@@ -12,21 +12,11 @@
 </head>
 <body>
     <main class="page">
-        <header class="topbar">
-            <a class="brand" href="${pageContext.request.contextPath}/manager/ManagerMainView.jsp">RestMan</a>
-            <div class="topbar-actions">
-                <span class="greeting">
-                    Xin chào, ${empty sessionScope.manager.fullName ? 'quản lý' : sessionScope.manager.fullName}
-                </span>
-                <a class="secondary-link"
-                   href="${pageContext.request.contextPath}/login?action=logout">
-                    Đăng xuất
-                </a>
-            </div>
-        </header>
         <section class="content">
-            <a class="back-link" href="${pageContext.request.contextPath}/manager/SelectReportView.jsp">Quay lại</a>
-            <h1 class="page-title">Thống kê khách hàng theo doanh thu</h1>
+            <div class="page-header-row">
+                <a class="back-link" href="${pageContext.request.contextPath}/manager/SelectReportView.jsp">Quay lại</a>
+                <h1 class="page-title">Thống kê khách hàng theo doanh thu</h1>
+            </div>
             <form class="filter-row" method="get"
                   action="${pageContext.request.contextPath}/customer-revenue">
                 <div class="filter-field">
